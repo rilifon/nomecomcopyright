@@ -8,11 +8,16 @@ const HEIGHT : int = 1024
 export var rows : int
 export var columns : int
 
-var picture : Resource
+var picture : ImageTexture
 
 func _ready() -> void:
 	print("atchim")
 	picture = get_picture()
 
-func get_picture() -> void:
-	pass
+func get_picture(path : = "image.jpg") -> ImageTexture:
+	var img = Image.new()
+	var texture = ImageTexture.new()
+	img.load("res://Assets/" + path)
+	img.resize(WIDTH, HEIGHT)
+	texture.create_from_image(img)
+	return texture
