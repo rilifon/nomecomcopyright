@@ -26,11 +26,13 @@ func get_picture(path : = "image.jpg") -> ImageTexture:
 	var img_width = img.get_width()
 	var img_height = img.get_height()
 	
-	if WIDTH - img_width >= HEIGHT - img_height:
-		img.resize(img_width, HEIGHT)
-	else: img.resize(WIDTH, img_height)
+	var aspect_ratio = float(img_width) / float(img_height)
 	
-	img.crop(WIDTH, HEIGHT)
+	if img_width >= img_height:
+		img.resize(float(WIDTH) * aspect_ratio, HEIGHT)
+	else: img.resize(WIDTH, float(HEIGHT) / aspect_ratio)
+	
+	img = img.get_rect(Rect2((img.get_width() - WIDTH)/2, (img.get_height() - HEIGHT)/2, WIDTH, HEIGHT))
 	
 	var texture = ImageTexture.new()
 	texture.create_from_image(img)
