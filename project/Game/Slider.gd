@@ -20,9 +20,8 @@ func _ready() -> void:
 
 
 func get_picture(path : = "image.jpg") -> ImageTexture:
-	var img = Image.new()
-	var texture = ImageTexture.new()
-	img.load("res://Assets/" + path)
+	var IMAGE = load("res://Assets/" + path)
+	var img : Image = IMAGE.get_data()
 	
 	var img_width = img.get_width()
 	var img_height = img.get_height()
@@ -33,6 +32,7 @@ func get_picture(path : = "image.jpg") -> ImageTexture:
 	
 	img.crop(WIDTH, HEIGHT)
 	
+	var texture = ImageTexture.new()
 	texture.create_from_image(img)
 	return texture
 
