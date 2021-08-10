@@ -7,5 +7,7 @@ uniform int id;
 void fragment(){
 	float w = 1.0/float(dimensions.x);
 	float h = 1.0/float(dimensions.y);
-	COLOR = vec4(1.0, 1.0, 1.0, 1.0);
+	float u = float(id%int(dimensions.y))*w;
+	float v = float(id/int(dimensions.x))*h;
+	COLOR = texture(tex, vec2(UV.x*w, UV.y*h)+vec2(u,v));
 }
