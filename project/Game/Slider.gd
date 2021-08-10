@@ -18,26 +18,27 @@ func _ready() -> void:
 	picture = get_picture()
 	make_board()
 
-
-func get_picture(path : = "image.jpg") -> ImageTexture:
+func get_picture(path : = "retangulo.jpg") -> ImageTexture:
 	var IMAGE = load("res://Assets/" + path)
 	var img : Image = IMAGE.get_data()
 	
-	var img_width = img.get_width()
-	var img_height = img.get_height()
+	img = scale_and_crop(img)
 	
-	var aspect_ratio = float(img_width) / float(img_height)
-	
-	if img_width >= img_height:
-		img.resize(float(WIDTH) * aspect_ratio, HEIGHT)
-	else: img.resize(WIDTH, float(HEIGHT) / aspect_ratio)
-	
-	img = img.get_rect(Rect2((img.get_width() - WIDTH)/2, (img.get_height() - HEIGHT)/2, WIDTH, HEIGHT))
+	img.save_png("res://Assets/imagem_rect.png")
 	
 	var texture = ImageTexture.new()
 	texture.create_from_image(img)
+	
 	return texture
 
+func scale_and_crop(img) -> Image:
+	var aspect_ratio = float(img.get_width()) / float(img.get_height())
+	
+	if img.get_width() >= img.get_height():
+		img.resize(float(WIDTH) * aspect_ratio, HEIGHT)
+	else: img.resize(WIDTH, float(HEIGHT) / aspect_ratio)
+	
+	return img.get_rect(Rect2((img.get_width() - WIDTH)/2, (img.get_height() - HEIGHT)/2, WIDTH, HEIGHT))
 
 func make_board() -> void:
 	for r in range(rows):

@@ -6,9 +6,8 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/dimensions = Vector2( 3, 3 )
-shader_param/id = 0
-shader_param/tex = ExtResource( 1 )
+shader_param/dimensions = null
+shader_param/id = null
 
 [node name="SliderPiece" type="TextureButton"]
 material = SubResource( 1 )
