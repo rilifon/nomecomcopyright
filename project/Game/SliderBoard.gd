@@ -1,6 +1,7 @@
 extends Node2D
 
 const PIECE = preload("res://Game/SliderPiece.tscn")
+const TEST_TEXTURE = preload("res://icon.png")
 
 const MAX_ROWS : int = 20
 const MAX_COLUMNS : int = 20
@@ -17,6 +18,9 @@ func _ready() -> void:
 	print("atchim")
 	picture = get_picture()
 	make_board()
+
+func _process(delta) -> void:
+	$GridContainer/SliderPiece3.rect_position.x += 1;
 
 func get_picture(path : = "retangulo.jpg") -> ImageTexture:
 	var IMAGE = load("res://Assets/" + path)
@@ -43,6 +47,14 @@ func scale_and_crop(img) -> Image:
 func make_board() -> void:
 	for r in range(rows):
 		for c in range(columns):
-			var new_piece = PIECE.instance()
-			board[r][c] = new_piece
-			add_child(new_piece)
+			create_piece(r, c)
+
+func create_piece(r: int, c: int) -> void:
+	var new_piece = PIECE.instance()
+	new_piece.setup(TEST_TEXTURE, rows, columns, r * columns + c)
+	board[r][c] = new_piece
+	self.add_child(new_piece)
+	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
+
+func _on_button_pressed(piece: TextureButton) -> void:
+	pass
