@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Game/SliderBoard.gd" type="Script" id=1]
+[ext_resource path="res://Game/SliderPiece.tscn" type="PackedScene" id=2]
 
 [node name="SliderBoard" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,3 +15,23 @@ columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SliderPiece" parent="GridContainer" instance=ExtResource( 2 )]
+margin_right = 509.0
+margin_bottom = 509.0
+
+[node name="SliderPiece2" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 514.0
+margin_right = 1023.0
+margin_bottom = 509.0
+
+[node name="SliderPiece3" parent="GridContainer" instance=ExtResource( 2 )]
+margin_top = 514.0
+margin_right = 509.0
+margin_bottom = 1023.0
+
+[node name="SliderPiece4" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 514.0
+margin_top = 514.0
+margin_right = 1023.0
+margin_bottom = 1023.0

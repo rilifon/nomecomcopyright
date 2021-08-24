@@ -18,10 +18,17 @@ var picture : ImageTexture
 
 func _ready() -> void:
 	randomize()
+	reset_board()
 	picture = get_picture()
 	rows = 2
 	columns = 2
 	make_board()
+
+
+func reset_board():
+	board = []
+	for child in Grid.get_children():
+		Grid.remove_child(child)
 
 
 func get_picture(path : = "retangulo.jpg") -> ImageTexture:
@@ -48,12 +55,20 @@ func scale_and_crop(img) -> Image:
 	return img.get_rect(Rect2((img.get_width() - WIDTH)/2, (img.get_height() - HEIGHT)/2, WIDTH, HEIGHT))
 
 func make_board() -> void:
-	board = []
 	var fake_piece = randi()%rows*columns
-	for r in range(rows):
-		board.append([])
+	board = [[]]
+	#Upper padding
+	for _i in range(columns+2):
+		board[0].append(-1)
+	for r in range(rows):           
+		board.append([-1])
 		for c in range(columns):
 			create_piece(r, c, fake_piece == r*columns + c)
+		board[r+1].append(-1)
+	board.append([])
+	#Lower padding
+	for _i in range(columns+2):
+		board[rows+1].append(-1)
 
 func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	var new_piece = PIECE.instance()
@@ -61,9 +76,28 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 		new_piece.setup(picture, rows, columns, -1)
 	else:
 		new_piece.setup(picture, rows, columns, r * columns + c)
-	board[r].insert(c, new_piece)
+	board[r+1].insert(c+1, new_piece)
 	Grid.add_child(new_piece)
 	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
 
-func _on_button_pressed(_piece: TextureButton) -> void:
-	pass
+
+func get_adjacent_free_space(piece):
+	var id = piece.id
+	var r = id%rows
+	var c = id/rows
+	for piece_pos in [[r,c-1],[r-1,c], [r,c+1], [r+1,c]]:
+		var cur_piece = board[piece_pos[0]][piece_pos[1]]
+		if cur_piece is Object and cur_piece.id == -1:
+			return cur_piece
+	return null
+
+
+func _on_button_pressed(piece: TextureButton) -> void:
+	if piece.id == -1:
+		return
+	
+	var free_neighbour = get_adjacent_free_space(piece)
+	if free_neighbour != null:
+		print(free_neighbour.id)
+	else:
+		print("sem vizinhos")
