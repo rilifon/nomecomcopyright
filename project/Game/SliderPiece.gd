@@ -10,5 +10,5 @@ func setup(texture, w, h, new_id) -> void:
 	material = MATERIAL.duplicate()
 	material.set_shader_param("tex", texture)
 	material.set_shader_param("dimensions", Vector2(w,h))
-	material.set_shader_param("id", id)
 	self.id = new_id
+	material.set_shader_param("id", id)

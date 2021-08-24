@@ -17,6 +17,7 @@ var board : Array
 var picture : ImageTexture
 
 func _ready() -> void:
+	randomize()
 	picture = get_picture()
 	rows = 2
 	columns = 2
@@ -48,17 +49,21 @@ func scale_and_crop(img) -> Image:
 
 func make_board() -> void:
 	board = []
+	var fake_piece = randi()%rows*columns
 	for r in range(rows):
 		board.append([])
 		for c in range(columns):
-			create_piece(r, c)
+			create_piece(r, c, fake_piece == r*columns + c)
 
-func create_piece(r: int, c: int) -> void:
+func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	var new_piece = PIECE.instance()
-	new_piece.setup(picture, rows, columns, r * columns + c)
+	if fake_piece:
+		new_piece.setup(picture, rows, columns, -1)
+	else:
+		new_piece.setup(picture, rows, columns, r * columns + c)
 	board[r].insert(c, new_piece)
 	Grid.add_child(new_piece)
 	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
 
-func _on_button_pressed(piece: TextureButton) -> void:
+func _on_button_pressed(_piece: TextureButton) -> void:
 	pass
