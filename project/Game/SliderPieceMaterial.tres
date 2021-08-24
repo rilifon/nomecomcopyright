@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D tex;
+uniform vec2 dimensions;
+uniform int id;
+
+void fragment(){
+	float w = 1.0/float(dimensions.x);
+	float h = 1.0/float(dimensions.y);
+	float u = float(id%int(dimensions.y))*w;
+	float v = float(id/int(dimensions.x))*h;
+	COLOR = texture(tex, vec2(UV.x*w, UV.y*h)+vec2(u,v));
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/dimensions = Vector2( 2, 2 )
+shader_param/id = null
+shader_param/tex = ExtResource( 1 )

@@ -15,7 +15,13 @@ _global_script_class_icons={
 [application]
 
 config/name="NomeComCopyright"
+run/main_scene="res://Game/SliderBoard.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1080
+window/size/height=1080
 
 [physics]
 

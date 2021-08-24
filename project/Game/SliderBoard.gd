@@ -11,16 +11,17 @@ const HEIGHT : int = 1024
 export var rows : int
 export var columns : int
 
+onready var Grid = $GridContainer
+
 var board : Array
 var picture : ImageTexture
 
 func _ready() -> void:
-	print("atchim")
 	picture = get_picture()
+	rows = 2
+	columns = 2
 	make_board()
 
-func _process(delta) -> void:
-	$GridContainer/SliderPiece3.rect_position.x += 1;
 
 func get_picture(path : = "retangulo.jpg") -> ImageTexture:
 	var IMAGE = load("res://Assets/" + path)
@@ -28,6 +29,7 @@ func get_picture(path : = "retangulo.jpg") -> ImageTexture:
 	
 	img = scale_and_crop(img)
 	
+# warning-ignore:return_value_discarded
 	img.save_png("res://Assets/imagem_rect.png")
 	
 	var texture = ImageTexture.new()
@@ -45,15 +47,17 @@ func scale_and_crop(img) -> Image:
 	return img.get_rect(Rect2((img.get_width() - WIDTH)/2, (img.get_height() - HEIGHT)/2, WIDTH, HEIGHT))
 
 func make_board() -> void:
+	board = []
 	for r in range(rows):
+		board.append([])
 		for c in range(columns):
 			create_piece(r, c)
 
 func create_piece(r: int, c: int) -> void:
 	var new_piece = PIECE.instance()
-	new_piece.setup(TEST_TEXTURE, rows, columns, r * columns + c)
-	board[r][c] = new_piece
-	self.add_child(new_piece)
+	new_piece.setup(picture, rows, columns, r * columns + c)
+	board[r].insert(c, new_piece)
+	Grid.add_child(new_piece)
 	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
 
 func _on_button_pressed(piece: TextureButton) -> void:
