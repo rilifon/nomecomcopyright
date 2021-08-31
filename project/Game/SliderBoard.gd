@@ -38,7 +38,7 @@ func get_picture(path : = "retangulo.jpg") -> ImageTexture:
 	img = scale_and_crop(img)
 	
 # warning-ignore:return_value_discarded
-	img.save_png("res://Assets/imagem_rect.png")
+	img.save_png("res://Assets/imagem_rect.png") # why is this here, Charles?
 	
 	var texture = ImageTexture.new()
 	texture.create_from_image(img)
@@ -101,3 +101,18 @@ func _on_button_pressed(piece: TextureButton) -> void:
 		print(free_neighbour.id)
 	else:
 		print("sem vizinhos")
+
+
+func check_board() -> bool:
+	# returns 'true' if board is solved yay
+	var piece_counter := -1
+	for row in board:
+		for piece in row:
+			if piece is TextureButton:
+				if piece.id >= 0: 
+					if piece.id > piece_counter:
+						piece_counter = piece.id
+					else:
+						print("haha vc é pequena")
+						return false
+	return true
