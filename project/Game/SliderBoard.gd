@@ -45,6 +45,7 @@ func get_picture(path : = "retangulo.jpg") -> ImageTexture:
 	
 	return texture
 
+
 func scale_and_crop(img) -> Image:
 	var aspect_ratio = float(img.get_width()) / float(img.get_height())
 	
@@ -53,6 +54,7 @@ func scale_and_crop(img) -> Image:
 	else: img.resize(WIDTH, float(HEIGHT) / aspect_ratio)
 	
 	return img.get_rect(Rect2((img.get_width() - WIDTH)/2, (img.get_height() - HEIGHT)/2, WIDTH, HEIGHT))
+
 
 func make_board() -> void:
 	var fake_piece = randi()%rows*columns
@@ -70,6 +72,16 @@ func make_board() -> void:
 	for _i in range(columns+2):
 		board[rows+1].append(-1)
 
+#For debugging
+func print_board():
+	print("=============")
+	for i in range(board.size()):
+		var text = ""
+		for j in range(board[i].size()):
+			text += str(board[i][j]) + " "
+		print(text)
+	print("=============")
+
 func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	var new_piece = PIECE.instance()
 	if fake_piece:
@@ -81,15 +93,47 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
 
 
+func get_piece_board_position(piece):
+	var pos = null
+	var found = false
+	for i in range(board.size()):           
+		for j in range(board[i].size()):
+			if board[i][j] is Object and board[i][j] == piece:
+				pos = [i,j]
+				found = true
+				break
+		if found:
+			break
+	assert(found, "Couldn't find this piece")
+	return pos
+
+
 func get_adjacent_free_space(piece):
-	var id = piece.id
-	var r = id%rows
-	var c = id/rows
-	for piece_pos in [[r,c-1],[r-1,c], [r,c+1], [r+1,c]]:
-		var cur_piece = board[piece_pos[0]][piece_pos[1]]
+	var piece_pos = get_piece_board_position(piece)
+	var r = piece_pos[0]
+	var c = piece_pos[1]
+	for pos in [[r,c-1],[r-1,c], [r,c+1], [r+1,c]]:
+		var cur_piece = board[pos[0]][pos[1]]
 		if cur_piece is Object and cur_piece.id == -1:
 			return cur_piece
 	return null
+
+
+func exchange_pieces_position(piece1, piece2):
+	var p1_pos = get_piece_board_position(piece1)
+	var p2_pos = get_piece_board_position(piece2)
+	
+	board[p1_pos.x][p1_pos.y] = piece2
+	board[p2_pos.x][p2_pos.y] = piece1
+	
+	var p1_new_grid_index = (p2_pos.x - 1)*columns + p2_pos.y - 1
+	var p2_new_grid_index = (p1_pos.x - 1)*columns + p1_pos.y - 1
+	if p2_new_grid_index > p1_new_grid_index:
+		Grid.move_child(piece2, p2_new_grid_index)
+		Grid.move_child(piece1, p1_new_grid_index)
+	else:
+		Grid.move_child(piece1, p1_new_grid_index)
+		Grid.move_child(piece2, p2_new_grid_index)
 
 
 func _on_button_pressed(piece: TextureButton) -> void:
@@ -98,7 +142,9 @@ func _on_button_pressed(piece: TextureButton) -> void:
 	
 	var free_neighbour = get_adjacent_free_space(piece)
 	if free_neighbour != null:
-		print(free_neighbour.id)
+		piece.move_to(free_neighbour)
+		yield(piece, "finished_moving")
+		exchange_pieces_position(piece, free_neighbour)
 	else:
 		print("sem vizinhos")
 
