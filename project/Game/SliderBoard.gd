@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 const PIECE = preload("res://Game/SliderPiece.tscn")
 const TEST_TEXTURE = preload("res://icon.png")
