@@ -136,6 +136,9 @@ func exchange_pieces_position(piece1, piece2) -> void:
 	else:
 		Grid.move_child(piece1, p1_new_grid_index)
 		Grid.move_child(piece2, p2_new_grid_index)
+	
+	if check_board():
+		print("haha img go brr")
 
 
 func _on_button_pressed(piece: TextureButton) -> void:
@@ -153,14 +156,13 @@ func _on_button_pressed(piece: TextureButton) -> void:
 
 func check_board() -> bool:
 	# returns 'true' if board is solved yay
-	var piece_counter := -1
+	var expected_id : int = 0
 	for row in board:
 		for piece in row:
 			if piece is TextureButton:
 				if piece.id >= 0: 
-					if piece.id > piece_counter:
-						piece_counter = piece.id
-					else:
+					if piece.id != expected_id:
 						print("haha vc é pequena")
 						return false
+				expected_id += 1
 	return true
