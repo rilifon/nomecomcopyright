@@ -20,8 +20,9 @@ func _ready() -> void:
 	randomize()
 	reset_board()
 	picture = get_picture()
-	rows = 2
-	columns = 2
+	rows = 4
+	columns = 4
+	$GridContainer.columns = columns
 	make_board()
 
 
