@@ -93,13 +93,13 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
 
 
-func get_piece_board_position(piece):
-	var pos = null
+func get_piece_board_position(piece) -> Vector2:
+	var pos = Vector2.ZERO
 	var found = false
 	for i in range(board.size()):           
 		for j in range(board[i].size()):
 			if board[i][j] is Object and board[i][j] == piece:
-				pos = [i,j]
+				pos = Vector2(i,j)
 				found = true
 				break
 		if found:
@@ -122,6 +122,9 @@ func get_adjacent_free_space(piece):
 func exchange_pieces_position(piece1, piece2):
 	var p1_pos = get_piece_board_position(piece1)
 	var p2_pos = get_piece_board_position(piece2)
+	
+	print(typeof(p1_pos) == TYPE_ARRAY)
+	print(typeof(p2_pos) == TYPE_ARRAY)
 	
 	board[p1_pos.x][p1_pos.y] = piece2
 	board[p2_pos.x][p2_pos.y] = piece1
