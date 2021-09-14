@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="NomeComCopyright"
-run/main_scene="res://Game/SliderBoard.tscn"
+run/main_scene="res://Game/GameScreen.tscn"
 config/icon="res://icon.png"
 
 [display]

@@ -15,6 +15,7 @@ onready var Grid = $GridContainer
 
 var board : Array
 var picture : ImageTexture
+var moves : int = 0;
 
 func _ready() -> void:
 	randomize()
@@ -123,6 +124,8 @@ func get_adjacent_free_space(piece):
 
 
 func exchange_pieces_position(piece1, piece2) -> void:
+	moves += 1
+	
 	var p1_pos = get_piece_board_position(piece1)
 	var p2_pos = get_piece_board_position(piece2)
 	
