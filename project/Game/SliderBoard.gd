@@ -72,8 +72,9 @@ func make_board() -> void:
 	for _i in range(columns+2):
 		board[rows+1].append(-1)
 
+
 #For debugging
-func print_board():
+func print_board() -> void:
 	print("=============")
 	for i in range(board.size()):
 		var text = ""
@@ -81,6 +82,7 @@ func print_board():
 			text += str(board[i][j]) + " "
 		print(text)
 	print("=============")
+
 
 func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	var new_piece = PIECE.instance()
@@ -119,12 +121,9 @@ func get_adjacent_free_space(piece):
 	return null
 
 
-func exchange_pieces_position(piece1, piece2):
+func exchange_pieces_position(piece1, piece2) -> void:
 	var p1_pos = get_piece_board_position(piece1)
 	var p2_pos = get_piece_board_position(piece2)
-	
-	print(typeof(p1_pos) == TYPE_ARRAY)
-	print(typeof(p2_pos) == TYPE_ARRAY)
 	
 	board[p1_pos.x][p1_pos.y] = piece2
 	board[p2_pos.x][p2_pos.y] = piece1
