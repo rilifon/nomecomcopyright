@@ -233,18 +233,5 @@ func _input(event):
 		print('right')
 
 
-func check_board() -> bool:
-	# returns 'true' if board is solved yay
-	var expected_id : int = 0
-	for row in board:
-		for piece in row:
-			if piece is TextureButton:
-				if piece.id >= 0: 
-					if piece.id != expected_id:
-						return false
-				expected_id += 1
-	return true
-
-
 func _on_button_dragged(piece, dir):
 	var adj_piece = get_adjacent_piece(piece, dir)
