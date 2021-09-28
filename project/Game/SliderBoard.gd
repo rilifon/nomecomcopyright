@@ -8,6 +8,8 @@ const MAX_COLUMNS : int = 20
 const WIDTH : int = 1024
 const HEIGHT : int = 1024
 
+enum DIR {UP, RIGHT, DOWN, LEFT}
+
 export var rows : int
 export var columns : int
 
@@ -95,6 +97,7 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 	board[r+1].insert(c+1, new_piece)
 	Grid.add_child(new_piece)
 	new_piece.connect("button_up", self, "_on_button_pressed", [new_piece])
+	new_piece.connect("dragged", self, "_on_button_dragged")
 
 
 func get_piece_board_position(piece) -> Vector2:
@@ -110,6 +113,28 @@ func get_piece_board_position(piece) -> Vector2:
 			break
 	assert(found, "Couldn't find this piece")
 	return pos
+
+
+func get_adjacent_piece(piece, dir):
+	var piece_pos = get_piece_board_position(piece)
+	var r = piece_pos[0]
+	var c = piece_pos[1]
+	var adj_piece
+	if dir == DIR.UP:
+		adj_piece = board[r-1][c]
+	elif dir == DIR.RIGHT:
+		adj_piece = board[r][c+1]
+	elif dir == DIR.DOWN:
+		adj_piece = board[r+1][c]
+	elif dir == DIR.LEFT:
+		adj_piece = board[r][c-1]
+	else:
+		push_error("Not a valid direction: " + str(dir))
+		return null
+	if adj_piece is Object:
+		return piece
+	else:
+		return null
 
 
 func get_adjacent_free_space(piece):
@@ -155,6 +180,19 @@ func disable_pieces():
 		piece.disabled = true
 
 
+func check_board() -> bool:
+	# returns 'true' if board is solved yay
+	var expected_id : int = 0
+	for row in board:
+		for piece in row:
+			if piece is TextureButton:
+				if piece.id >= 0: 
+					if piece.id != expected_id:
+						return false
+				expected_id += 1
+	return true
+
+
 func _on_button_pressed(piece: TextureButton) -> void:
 	if piece.id == -1:
 		return
@@ -170,14 +208,5 @@ func _on_button_pressed(piece: TextureButton) -> void:
 		exchange_pieces_position(piece, free_neighbour)
 
 
-func check_board() -> bool:
-	# returns 'true' if board is solved yay
-	var expected_id : int = 0
-	for row in board:
-		for piece in row:
-			if piece is TextureButton:
-				if piece.id >= 0: 
-					if piece.id != expected_id:
-						return false
-				expected_id += 1
-	return true
+func _on_button_dragged(piece, dir):
+	var adj_piece = get_adjacent_piece(piece, dir)
