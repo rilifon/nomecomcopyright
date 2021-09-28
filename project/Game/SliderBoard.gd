@@ -8,6 +8,8 @@ const MAX_COLUMNS : int = 20
 const WIDTH : int = 1024
 const HEIGHT : int = 1024
 
+enum DIR {UP, RIGHT, DOWN, LEFT}
+
 export var rows : int
 export var columns : int
 
@@ -15,7 +17,8 @@ onready var Grid = $GridContainer
 
 var board : Array
 var picture : ImageTexture
-var moves : int = 0;
+var moves : int = 0
+
 
 func _ready() -> void:
 	randomize()
@@ -94,7 +97,8 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 		new_piece.setup(picture, rows, columns, r * columns + c)
 	board[r+1].insert(c+1, new_piece)
 	Grid.add_child(new_piece)
-	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
+	new_piece.connect("button_up", self, "_on_button_pressed", [new_piece])
+	new_piece.connect("dragged", self, "_on_button_dragged")
 
 
 func get_piece_board_position(piece) -> Vector2:
@@ -110,6 +114,38 @@ func get_piece_board_position(piece) -> Vector2:
 			break
 	assert(found, "Couldn't find this piece")
 	return pos
+
+
+func get_free_space_piece() -> TextureButton:
+	var blank_piece = null
+	for i in range(board.size()):           
+		for j in range(board[i].size()):
+			if board[i][j] is Object and board[i][j].id == -1:
+				blank_piece = board[i][j]
+				break
+	return blank_piece
+
+
+func get_adjacent_piece(piece, dir):
+	var piece_pos = get_piece_board_position(piece)
+	var r = piece_pos[0]
+	var c = piece_pos[1]
+	var adj_piece
+	if dir == DIR.UP:
+		adj_piece = board[r-1][c]
+	elif dir == DIR.RIGHT:
+		adj_piece = board[r][c+1]
+	elif dir == DIR.DOWN:
+		adj_piece = board[r+1][c]
+	elif dir == DIR.LEFT:
+		adj_piece = board[r][c-1]
+	else:
+		push_error("Not a valid direction: " + str(dir))
+		return null
+	if adj_piece is Object:
+		return piece
+	else:
+		return null
 
 
 func get_adjacent_free_space(piece):
@@ -155,6 +191,19 @@ func disable_pieces():
 		piece.disabled = true
 
 
+func check_board() -> bool:
+	# returns 'true' if board is solved yay
+	var expected_id : int = 0
+	for row in board:
+		for piece in row:
+			if piece is TextureButton:
+				if piece.id >= 0: 
+					if piece.id != expected_id:
+						return false
+				expected_id += 1
+	return true
+
+
 func _on_button_pressed(piece: TextureButton) -> void:
 	if piece.id == -1:
 		return
@@ -168,18 +217,21 @@ func _on_button_pressed(piece: TextureButton) -> void:
 		
 		enable_pieces()
 		exchange_pieces_position(piece, free_neighbour)
-	else:
-		print("sem vizinhos")
 
 
-func check_board() -> bool:
-	# returns 'true' if board is solved yay
-	var expected_id : int = 0
-	for row in board:
-		for piece in row:
-			if piece is TextureButton:
-				if piece.id >= 0: 
-					if piece.id != expected_id:
-						return false
-				expected_id += 1
-	return true
+func _input(event):
+	var blank_piece = null
+	if event is InputEventKey:
+		blank_piece = get_free_space_piece()
+	if event.is_action_released("move_piece_up"):
+		print('up')
+	elif event.is_action_released("move_piece_down"):
+		print('down')
+	elif event.is_action_released("move_piece_left"):
+		print("eat the rich")
+	elif event.is_action_released("move_piece_right"):
+		print('right')
+
+
+func _on_button_dragged(piece, dir):
+	var adj_piece = get_adjacent_piece(piece, dir)
