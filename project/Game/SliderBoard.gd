@@ -94,7 +94,7 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 		new_piece.setup(picture, rows, columns, r * columns + c)
 	board[r+1].insert(c+1, new_piece)
 	Grid.add_child(new_piece)
-	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
+	new_piece.connect("button_up", self, "_on_button_pressed", [new_piece])
 
 
 func get_piece_board_position(piece) -> Vector2:
@@ -168,8 +168,6 @@ func _on_button_pressed(piece: TextureButton) -> void:
 		
 		enable_pieces()
 		exchange_pieces_position(piece, free_neighbour)
-	else:
-		print("sem vizinhos")
 
 
 func check_board() -> bool:
