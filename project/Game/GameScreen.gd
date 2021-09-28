@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends Control
 
 export(NodePath) onready var slider_board = self.get_node(slider_board) as Control
 export(NodePath) onready var moves_label = self.get_node(moves_label) as Label
@@ -12,9 +12,9 @@ func _ready():
 
 
 func _process(_delta):
-	moves_label.text = "Moves: " + str(slider_board.moves);
+	moves_label.text = str(slider_board.moves) + "\nMoves";
 	ellapsed_time = OS.get_unix_time() - start_time
-	time_label.text = "Time: " + format_time(ellapsed_time)
+	time_label.text = format_time(ellapsed_time)
 
 
 func format_time(ellapsed_seconds : int) -> String:
