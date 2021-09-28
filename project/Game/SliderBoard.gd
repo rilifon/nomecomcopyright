@@ -15,7 +15,7 @@ onready var Grid = $GridContainer
 
 var board : Array
 var picture : ImageTexture
-var moves : int = 0;
+var moves : int = 0
 
 func _ready() -> void:
 	randomize()
@@ -112,6 +112,16 @@ func get_piece_board_position(piece) -> Vector2:
 	return pos
 
 
+func get_free_space_piece() -> TextureButton:
+	var blank_piece = null
+	for i in range(board.size()):           
+		for j in range(board[i].size()):
+			if board[i][j] is Object and board[i][j].id == -1:
+				blank_piece = board[i][j]
+				break
+	return blank_piece
+
+
 func get_adjacent_free_space(piece):
 	var piece_pos = get_piece_board_position(piece)
 	var r = piece_pos[0]
@@ -170,6 +180,20 @@ func _on_button_pressed(piece: TextureButton) -> void:
 		exchange_pieces_position(piece, free_neighbour)
 	else:
 		print("sem vizinhos")
+
+
+func _input(event):
+	var blank_piece = null
+	if event is InputEventKey:
+		blank_piece = get_free_space_piece()
+	if event.is_action_released("move_piece_up"):
+		print('up')
+	elif event.is_action_released("move_piece_down"):
+		print('down')
+	elif event.is_action_released("move_piece_left"):
+		print("eat the rich")
+	elif event.is_action_released("move_piece_right"):
+		print('right')
 
 
 func check_board() -> bool:
