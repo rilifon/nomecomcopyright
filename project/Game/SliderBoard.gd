@@ -8,6 +8,8 @@ const MAX_COLUMNS : int = 20
 const WIDTH : int = 1024
 const HEIGHT : int = 1024
 
+enum DIR {UP, RIGHT, DOWN, LEFT}
+
 export var rows : int
 export var columns : int
 
@@ -94,7 +96,8 @@ func create_piece(r: int, c: int, fake_piece: bool) -> void:
 		new_piece.setup(picture, rows, columns, r * columns + c)
 	board[r+1].insert(c+1, new_piece)
 	Grid.add_child(new_piece)
-	new_piece.connect("button_down", self, "_on_button_pressed", [new_piece])
+	new_piece.connect("button_up", self, "_on_button_pressed", [new_piece])
+	new_piece.connect("dragged", self, "_on_button_dragged")
 
 
 func get_piece_board_position(piece) -> Vector2:
@@ -110,6 +113,28 @@ func get_piece_board_position(piece) -> Vector2:
 			break
 	assert(found, "Couldn't find this piece")
 	return pos
+
+
+func get_adjacent_piece(piece, dir):
+	var piece_pos = get_piece_board_position(piece)
+	var r = piece_pos[0]
+	var c = piece_pos[1]
+	var adj_piece
+	if dir == DIR.UP:
+		adj_piece = board[r-1][c]
+	elif dir == DIR.RIGHT:
+		adj_piece = board[r][c+1]
+	elif dir == DIR.DOWN:
+		adj_piece = board[r+1][c]
+	elif dir == DIR.LEFT:
+		adj_piece = board[r][c-1]
+	else:
+		push_error("Not a valid direction: " + str(dir))
+		return null
+	if adj_piece is Object:
+		return piece
+	else:
+		return null
 
 
 func get_adjacent_free_space(piece):
@@ -145,17 +170,14 @@ func exchange_pieces_position(piece1, piece2) -> void:
 		print("haha img go brr")
 
 
-func _on_button_pressed(piece: TextureButton) -> void:
-	if piece.id == -1:
-		return
-	
-	var free_neighbour = get_adjacent_free_space(piece)
-	if free_neighbour != null:
-		piece.move_to(free_neighbour)
-		yield(piece, "finished_moving")
-		exchange_pieces_position(piece, free_neighbour)
-	else:
-		print("sem vizinhos")
+func enable_pieces():
+	for piece in Grid.get_children():
+		piece.disabled = false
+
+
+func disable_pieces():
+	for piece in Grid.get_children():
+		piece.disabled = true
 
 
 func check_board() -> bool:
@@ -166,7 +188,25 @@ func check_board() -> bool:
 			if piece is TextureButton:
 				if piece.id >= 0: 
 					if piece.id != expected_id:
-						print("haha vc é pequena")
 						return false
 				expected_id += 1
 	return true
+
+
+func _on_button_pressed(piece: TextureButton) -> void:
+	if piece.id == -1:
+		return
+	
+	var free_neighbour = get_adjacent_free_space(piece)
+	if free_neighbour != null:
+		piece.move_to(free_neighbour)
+		disable_pieces()
+		
+		yield(piece, "finished_moving")
+		
+		enable_pieces()
+		exchange_pieces_position(piece, free_neighbour)
+
+
+func _on_button_dragged(piece, dir):
+	var adj_piece = get_adjacent_piece(piece, dir)

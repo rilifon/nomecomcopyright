@@ -11,7 +11,7 @@ func _ready():
 	start_time = OS.get_unix_time()
 
 
-func _process(delta):
+func _process(_delta):
 	moves_label.text = "Moves: " + str(slider_board.moves);
 	ellapsed_time = OS.get_unix_time() - start_time
 	time_label.text = "Time: " + format_time(ellapsed_time)
@@ -19,6 +19,7 @@ func _process(delta):
 
 func format_time(ellapsed_seconds : int) -> String:
 	var result : String = ""
+# warning-ignore:integer_division
 	var minutes = ellapsed_seconds / 60
 	if minutes < 10:
 		result += "0"
