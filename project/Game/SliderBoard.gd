@@ -145,6 +145,16 @@ func exchange_pieces_position(piece1, piece2) -> void:
 		print("haha img go brr")
 
 
+func enable_pieces():
+	for piece in Grid.get_children():
+		piece.disabled = false
+
+
+func disable_pieces():
+	for piece in Grid.get_children():
+		piece.disabled = true
+
+
 func _on_button_pressed(piece: TextureButton) -> void:
 	if piece.id == -1:
 		return
@@ -152,7 +162,11 @@ func _on_button_pressed(piece: TextureButton) -> void:
 	var free_neighbour = get_adjacent_free_space(piece)
 	if free_neighbour != null:
 		piece.move_to(free_neighbour)
+		disable_pieces()
+		
 		yield(piece, "finished_moving")
+		
+		enable_pieces()
 		exchange_pieces_position(piece, free_neighbour)
 	else:
 		print("sem vizinhos")
@@ -166,7 +180,6 @@ func check_board() -> bool:
 			if piece is TextureButton:
 				if piece.id >= 0: 
 					if piece.id != expected_id:
-						print("haha vc é pequena")
 						return false
 				expected_id += 1
 	return true
