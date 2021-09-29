@@ -208,6 +208,7 @@ func _on_button_pressed(piece: TextureButton) -> void:
 	if piece.id == -1:
 		return
 	
+	set_process_input(false)
 	var free_neighbour = get_adjacent_free_space(piece)
 	if free_neighbour != null:
 		piece.move_to(free_neighbour)
@@ -217,6 +218,7 @@ func _on_button_pressed(piece: TextureButton) -> void:
 		
 		enable_pieces()
 		exchange_pieces_position(piece, free_neighbour)
+	set_process_input(true)
 
 
 func _input(event):
@@ -237,7 +239,7 @@ func _input(event):
 		print('right')
 		moving_piece = get_adjacent_piece(blank_piece, DIR.LEFT)
 	if blank_piece and moving_piece:
-		exchange_pieces_position(blank_piece, moving_piece)
+		_on_button_pressed(moving_piece)
 
 
 func _on_button_dragged(piece, dir):
