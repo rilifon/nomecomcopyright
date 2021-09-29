@@ -227,16 +227,12 @@ func _input(event):
 	if event is InputEventKey:
 		blank_piece = get_free_space_piece()
 	if event.is_action_released("move_piece_up"):
-		print('up')
 		moving_piece = get_adjacent_piece(blank_piece, DIR.DOWN)
 	elif event.is_action_released("move_piece_down"):
-		print('down')
 		moving_piece = get_adjacent_piece(blank_piece, DIR.UP)
 	elif event.is_action_released("move_piece_left"):
-		print("eat the rich")
 		moving_piece = get_adjacent_piece(blank_piece, DIR.RIGHT)
 	elif event.is_action_released("move_piece_right"):
-		print('right')
 		moving_piece = get_adjacent_piece(blank_piece, DIR.LEFT)
 	if blank_piece and moving_piece:
 		_on_button_pressed(moving_piece)
