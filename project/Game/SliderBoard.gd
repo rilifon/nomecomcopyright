@@ -143,7 +143,7 @@ func get_adjacent_piece(piece, dir):
 		push_error("Not a valid direction: " + str(dir))
 		return null
 	if adj_piece is Object:
-		return piece
+		return adj_piece
 	else:
 		return null
 
@@ -221,16 +221,23 @@ func _on_button_pressed(piece: TextureButton) -> void:
 
 func _input(event):
 	var blank_piece = null
+	var moving_piece = null
 	if event is InputEventKey:
 		blank_piece = get_free_space_piece()
 	if event.is_action_released("move_piece_up"):
 		print('up')
+		moving_piece = get_adjacent_piece(blank_piece, DIR.DOWN)
 	elif event.is_action_released("move_piece_down"):
 		print('down')
+		moving_piece = get_adjacent_piece(blank_piece, DIR.UP)
 	elif event.is_action_released("move_piece_left"):
 		print("eat the rich")
+		moving_piece = get_adjacent_piece(blank_piece, DIR.RIGHT)
 	elif event.is_action_released("move_piece_right"):
 		print('right')
+		moving_piece = get_adjacent_piece(blank_piece, DIR.LEFT)
+	if blank_piece and moving_piece:
+		exchange_pieces_position(blank_piece, moving_piece)
 
 
 func _on_button_dragged(piece, dir):
