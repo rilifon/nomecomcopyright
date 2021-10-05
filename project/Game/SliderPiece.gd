@@ -12,9 +12,12 @@ signal finished_moving
 
 var id: int
 var last_clicked = false
+var dragged := false
 
 
 func _input(event):
+	if disabled:
+		return
 	if event is InputEventMouseMotion:
 		var dir = get_drag_direction()
 		if dir:
@@ -22,7 +25,7 @@ func _input(event):
 
 
 func get_drag_direction():
-	if not last_clicked:
+	if not last_clicked or dragged:
 		return false
 
 	var diff = get_local_mouse_position() - last_clicked
@@ -63,6 +66,7 @@ func move_to(target_piece):
 
 func _on_SliderPiece_button_up():
 	last_clicked = false
+	dragged = false
 
 
 func _on_SliderPiece_button_down():

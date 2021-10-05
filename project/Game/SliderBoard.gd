@@ -30,6 +30,23 @@ func _ready() -> void:
 	make_board()
 
 
+func _input(event):
+	var blank_piece = null
+	var moving_piece = null
+	if event is InputEventKey:
+		blank_piece = get_free_space_piece()
+	if event.is_action_released("move_piece_up"):
+		moving_piece = get_adjacent_piece(blank_piece, DIR.DOWN)
+	elif event.is_action_released("move_piece_down"):
+		moving_piece = get_adjacent_piece(blank_piece, DIR.UP)
+	elif event.is_action_released("move_piece_left"):
+		moving_piece = get_adjacent_piece(blank_piece, DIR.RIGHT)
+	elif event.is_action_released("move_piece_right"):
+		moving_piece = get_adjacent_piece(blank_piece, DIR.LEFT)
+	if blank_piece and moving_piece:
+		_on_button_pressed(moving_piece)
+
+
 func reset_board():
 	board = []
 	for child in Grid.get_children():
@@ -159,6 +176,17 @@ func get_adjacent_free_space(piece):
 	return null
 
 
+func move_piece(piece, free_piece):
+	assert(free_piece.id == -1, "Moving to an invalid position")
+	piece.move_to(free_piece)
+	disable_pieces()
+	
+	yield(piece, "finished_moving")
+	
+	enable_pieces()
+	exchange_pieces_position(piece, free_piece)
+
+
 func exchange_pieces_position(piece1, piece2) -> void:
 	moves += 1
 	
@@ -205,38 +233,18 @@ func check_board() -> bool:
 
 
 func _on_button_pressed(piece: TextureButton) -> void:
-	if piece.id == -1:
+	if piece.id == -1 or piece.dragged:
 		return
 	
 	set_process_input(false)
 	var free_neighbour = get_adjacent_free_space(piece)
 	if free_neighbour != null:
-		piece.move_to(free_neighbour)
-		disable_pieces()
-		
-		yield(piece, "finished_moving")
-		
-		enable_pieces()
-		exchange_pieces_position(piece, free_neighbour)
+		move_piece(piece, free_neighbour)
 	set_process_input(true)
-
-
-func _input(event):
-	var blank_piece = null
-	var moving_piece = null
-	if event is InputEventKey:
-		blank_piece = get_free_space_piece()
-	if event.is_action_released("move_piece_up"):
-		moving_piece = get_adjacent_piece(blank_piece, DIR.DOWN)
-	elif event.is_action_released("move_piece_down"):
-		moving_piece = get_adjacent_piece(blank_piece, DIR.UP)
-	elif event.is_action_released("move_piece_left"):
-		moving_piece = get_adjacent_piece(blank_piece, DIR.RIGHT)
-	elif event.is_action_released("move_piece_right"):
-		moving_piece = get_adjacent_piece(blank_piece, DIR.LEFT)
-	if blank_piece and moving_piece:
-		_on_button_pressed(moving_piece)
 
 
 func _on_button_dragged(piece, dir):
 	var adj_piece = get_adjacent_piece(piece, dir)
+	if adj_piece and adj_piece.id == -1:
+		piece.dragged = true
+		move_piece(piece, adj_piece)
