@@ -23,11 +23,12 @@ var moves : int = 0
 func _ready() -> void:
 	randomize()
 	reset_board()
-	picture = get_picture()
+	picture = get_picture("sliding_puzzle-Bracelete.png")
 	rows = 4
 	columns = 4
 	$GridContainer.columns = columns
 	make_board()
+	randomize_board()
 
 
 func _input(event):
@@ -93,6 +94,16 @@ func make_board() -> void:
 	#Lower padding
 	for _i in range(columns+2):
 		board[rows+1].append(-1)
+
+
+func randomize_board(number_of_swaps:= 10):
+	for _i in number_of_swaps:
+		var id1 = randi()%Grid.get_child_count()
+		var id2 = randi()%Grid.get_child_count()
+		while id2 == id1:
+			id2 = randi()%Grid.get_child_count()
+		
+		exchange_pieces_position(Grid.get_child(id1), Grid.get_child(id2))
 
 
 #For debugging
@@ -185,6 +196,8 @@ func move_piece(piece, free_piece):
 	
 	enable_pieces()
 	exchange_pieces_position(piece, free_piece)
+	if check_board():
+		print("haha img go brr")
 
 
 func exchange_pieces_position(piece1, piece2) -> void:
@@ -204,9 +217,6 @@ func exchange_pieces_position(piece1, piece2) -> void:
 	else:
 		Grid.move_child(piece1, p1_new_grid_index)
 		Grid.move_child(piece2, p2_new_grid_index)
-	
-	if check_board():
-		print("haha img go brr")
 
 
 func enable_pieces():

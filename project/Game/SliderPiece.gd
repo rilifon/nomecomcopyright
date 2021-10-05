@@ -24,6 +24,15 @@ func _input(event):
 			emit_signal("dragged", self, dir)
 
 
+func setup(texture, w, h, new_id) -> void:
+	rect_size = Vector2(texture.get_width()/float(w),texture.get_height()/float(h))
+	material = MATERIAL.duplicate()
+	material.set_shader_param("tex", texture)
+	material.set_shader_param("dimensions", Vector2(w,h))
+	self.id = new_id
+	material.set_shader_param("id", id)
+
+
 func get_drag_direction():
 	if not last_clicked or dragged:
 		return false
@@ -43,15 +52,6 @@ func get_drag_direction():
 			return DIR.RIGHT
 	
 	return false
-
-
-func setup(texture, w, h, new_id) -> void:
-	rect_size = Vector2(texture.get_width()/float(w),texture.get_height()/float(h))
-	material = MATERIAL.duplicate()
-	material.set_shader_param("tex", texture)
-	material.set_shader_param("dimensions", Vector2(w,h))
-	self.id = new_id
-	material.set_shader_param("id", id)
 
 
 func move_to(target_piece):
