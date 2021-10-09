@@ -29,4 +29,4 @@ func on_image_pressed(image):
 	board.picture = board.get_picture(image.texture_normal.resource_path)
 	
 	get_tree().get_root().add_child(game)
-	queue_free()
+	owner.queue_free()
