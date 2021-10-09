@@ -1,10 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Sauce Code Pro Nerd Font Complete Mono.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Assets/sliding_puzzleSupercão.png" type="Texture" id=2]
-[ext_resource path="res://Assets/sliding_puzzle-Cobragato.png" type="Texture" id=3]
-[ext_resource path="res://Assets/sliding_puzzle-Crisântemo.png" type="Texture" id=4]
-[ext_resource path="res://Assets/sliding_puzzle-Bracelete.png" type="Texture" id=5]
+[ext_resource path="res://Assets/sliding_puzzleSupercão-min.png" type="Texture" id=2]
+[ext_resource path="res://Assets/sliding_puzzle-Cobragato-min.png" type="Texture" id=3]
+[ext_resource path="res://Assets/sliding_puzzle-Crisântemo-min.png" type="Texture" id=4]
+[ext_resource path="res://Assets/sliding_puzzle-Bracelete-min.png" type="Texture" id=5]
+[ext_resource path="res://Assets/upload_image_button.png" type="Texture" id=6]
+[ext_resource path="res://Game/GridContainer.gd" type="Script" id=7]
+[ext_resource path="res://Assets/image.jpg" type="Texture" id=8]
+[ext_resource path="res://Assets/cubo.jpg" type="Texture" id=9]
+[ext_resource path="res://Assets/imagem_rect.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -19,48 +24,25 @@ __meta__ = {
 
 [node name="Headers" type="HBoxContainer" parent="."]
 margin_right = 1080.0
-margin_bottom = 568.0
+margin_bottom = 479.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Headers"]
-margin_right = 357.0
-margin_bottom = 568.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "i am some text saying some stuff"
-align = 1
-valign = 1
-autowrap = true
 
 [node name="Level" type="Label" parent="Headers"]
-margin_left = 361.0
-margin_right = 718.0
-margin_bottom = 568.0
+margin_right = 1080.0
+margin_bottom = 479.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
-text = "Level XXX"
+text = "choese your level"
 align = 1
 valign = 1
 autowrap = true
 
-[node name="Time" type="Label" parent="Headers"]
-margin_left = 722.0
-margin_right = 1080.0
-margin_bottom = 568.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "Time: 00:00"
-align = 1
-valign = 1
-
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-margin_top = 572.0
+margin_top = 483.0
 margin_right = 1080.0
-margin_bottom = 2279.0
+margin_bottom = 1920.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 3
@@ -69,53 +51,108 @@ scroll_horizontal_enabled = false
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
 margin_right = 1080.0
-margin_bottom = 1707.0
-grow_horizontal = 0
+margin_bottom = 1100.0
+grow_horizontal = 2
 grow_vertical = 0
+rect_min_size = Vector2( 0, 1100 )
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 2
 columns = 2
+script = ExtResource( 7 )
 
 [node name="Image1" type="TextureButton" parent="ScrollContainer/GridContainer"]
 margin_right = 538.0
-margin_bottom = 851.0
+margin_bottom = 272.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
-size_flags_vertical = 3
+shortcut_in_tooltip = false
 texture_normal = ExtResource( 5 )
 expand = true
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="Image2" type="TextureButton" parent="ScrollContainer/GridContainer"]
 margin_left = 542.0
 margin_right = 1080.0
-margin_bottom = 851.0
+margin_bottom = 272.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_in_tooltip = false
 texture_normal = ExtResource( 3 )
 expand = true
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="Image3" type="TextureButton" parent="ScrollContainer/GridContainer"]
-margin_top = 855.0
+margin_top = 276.0
 margin_right = 538.0
-margin_bottom = 1706.0
+margin_bottom = 548.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_in_tooltip = false
 texture_normal = ExtResource( 4 )
 expand = true
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="Image4" type="TextureButton" parent="ScrollContainer/GridContainer"]
 margin_left = 542.0
-margin_top = 855.0
+margin_top = 276.0
 margin_right = 1080.0
-margin_bottom = 1706.0
+margin_bottom = 548.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_in_tooltip = false
 texture_normal = ExtResource( 2 )
 expand = true
-stretch_mode = 4
+stretch_mode = 5
+
+[node name="Image5" type="TextureButton" parent="ScrollContainer/GridContainer"]
+margin_top = 552.0
+margin_right = 538.0
+margin_bottom = 824.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+size_flags_stretch_ratio = 0.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 8 )
+expand = true
+stretch_mode = 5
+
+[node name="Image7" type="TextureButton" parent="ScrollContainer/GridContainer"]
+margin_left = 542.0
+margin_top = 552.0
+margin_right = 1080.0
+margin_bottom = 824.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+size_flags_stretch_ratio = 0.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 10 )
+expand = true
+stretch_mode = 5
+
+[node name="Image8" type="TextureButton" parent="ScrollContainer/GridContainer"]
+margin_top = 828.0
+margin_right = 538.0
+margin_bottom = 1100.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+size_flags_stretch_ratio = 0.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 9 )
+expand = true
+stretch_mode = 5
+
+[node name="Image6" type="TextureButton" parent="ScrollContainer/GridContainer"]
+margin_left = 542.0
+margin_top = 828.0
+margin_right = 1080.0
+margin_bottom = 1100.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+size_flags_stretch_ratio = 0.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 6 )
+expand = true
+stretch_mode = 5

@@ -131,5 +131,4 @@ autowrap = true
 
 [node name="IngameSettings" parent="." instance=ExtResource( 7 )]
 visible = false
-
 [connection signal="pressed" from="VBoxContainer/Headers/CenterContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
