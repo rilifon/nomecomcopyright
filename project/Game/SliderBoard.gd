@@ -23,7 +23,7 @@ var moves : int = 0
 func _ready() -> void:
 	randomize()
 	reset_board()
-	picture = get_picture("sliding_puzzle-Bracelete-min.png")
+#	picture = get_picture("sliding_puzzle-Bracelete-min.png")
 	rows = 4
 	columns = 4
 	$GridContainer.columns = columns
@@ -54,14 +54,11 @@ func reset_board():
 		Grid.remove_child(child)
 
 
-func get_picture(path : = "retangulo.jpg") -> ImageTexture:
-	var IMAGE = load("res://Assets/" + path)
+func get_picture(path : = "res://Assets/retangulo.jpg") -> ImageTexture:
+	var IMAGE = load(path)
 	var img : Image = IMAGE.get_data()
 	
 	img = scale_and_crop(img)
-	
-# warning-ignore:return_value_discarded
-	img.save_png("res://Assets/imagem_rect.png") # why is this here, Charles?
 	
 	var texture = ImageTexture.new()
 	texture.create_from_image(img)
