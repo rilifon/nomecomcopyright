@@ -44,7 +44,7 @@ func _input(event):
 		moving_piece = get_adjacent_piece(blank_piece, DIR.RIGHT)
 	elif event.is_action_released("move_piece_right"):
 		moving_piece = get_adjacent_piece(blank_piece, DIR.LEFT)
-	if blank_piece and moving_piece:
+	if blank_piece and moving_piece and not moving_piece.disabled:
 		_on_button_pressed(moving_piece)
 
 
@@ -242,12 +242,10 @@ func check_board() -> bool:
 func _on_button_pressed(piece: TextureButton) -> void:
 	if piece.id == -1 or piece.dragged:
 		return
-	
-	set_process_input(false)
+
 	var free_neighbour = get_adjacent_free_space(piece)
 	if free_neighbour != null:
 		move_piece(piece, free_neighbour)
-	set_process_input(true)
 
 
 func _on_button_dragged(piece, dir):
