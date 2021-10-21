@@ -6,8 +6,10 @@ func _ready():
 	on_resize_screen()
 	connect("resized", self, "on_resize_screen")
 	
-	for image in get_children():
-		image.connect("pressed", self, "on_image_pressed", [image])
+	var children = get_children()
+	
+	for i in range(0, children.size() - 1):
+		children[i].connect("pressed", self, "on_image_pressed", [children[i]])
 
 
 func on_resize_screen():
@@ -30,3 +32,7 @@ func on_image_pressed(image):
 	
 	get_tree().get_root().add_child(game)
 	owner.queue_free()
+
+
+func _on_Select_Image_pressed():
+	pass # Replace with function body.
