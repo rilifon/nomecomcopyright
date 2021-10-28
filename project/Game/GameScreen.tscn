@@ -22,7 +22,7 @@ __meta__ = {
 }
 slider_board = NodePath("VBoxContainer/SliderBoard")
 moves_label = NodePath("VBoxContainer/BottomText/Moves")
-timer_label = NodePath("VBoxContainer/Headers/Timer")
+timer_label = NodePath("VBoxContainer/BottomText/Timer")
 ingame_settings = NodePath("IngameSettings")
 
 [node name="Background" parent="." instance=ExtResource( 4 )]
@@ -70,7 +70,7 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="Timer" type="Label" parent="VBoxContainer/Headers"]
+[node name="Reset" type="Label" parent="VBoxContainer/Headers"]
 margin_left = 722.0
 margin_right = 1080.0
 margin_bottom = 444.0
@@ -105,14 +105,14 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="Label2" type="Label" parent="VBoxContainer/BottomText"]
+[node name="Timer" type="Label" parent="VBoxContainer/BottomText"]
 margin_left = 361.0
 margin_right = 718.0
 margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
-text = "bottom text"
+text = "00:00"
 align = 1
 valign = 1
 autowrap = true
