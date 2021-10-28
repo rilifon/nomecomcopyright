@@ -104,7 +104,7 @@ func randomize_board(number_of_swaps:= 600):
 		while not target_piece:
 			target_piece = get_adjacent_piece(free_piece, get_random_direction())
 		
-		exchange_pieces_position(free_piece, target_piece)
+		exchange_pieces_position(free_piece, target_piece, false)
 
 
 #For debugging
@@ -196,13 +196,14 @@ func move_piece(piece, free_piece):
 	yield(piece, "finished_moving")
 	
 	enable_pieces()
-	exchange_pieces_position(piece, free_piece)
+	exchange_pieces_position(piece, free_piece, true)
 	if check_board():
 		print("haha img go brr")
 
 
-func exchange_pieces_position(piece1, piece2) -> void:
-	moves += 1
+func exchange_pieces_position(piece1, piece2, increase_moves) -> void:
+	if increase_moves:
+		moves += 1
 	
 	var p1_pos = get_piece_board_position(piece1)
 	var p2_pos = get_piece_board_position(piece2)

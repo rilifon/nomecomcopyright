@@ -3,7 +3,7 @@ extends TextureButton
 signal dragged
 
 const MATERIAL = preload("res://Game/SliderPieceMaterial.tres")
-const SPEED = 700
+const SPEED = 1000
 const DEADZONE = 60
 
 enum DIR {UP, RIGHT, DOWN, LEFT}
