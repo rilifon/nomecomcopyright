@@ -188,14 +188,15 @@ margin_left = -540.0
 margin_top = -273.0
 margin_right = 540.0
 margin_bottom = 272.0
-window_title = "Choese yout image"
+window_title = "Abrir um Ficheiro"
 resizable = true
 dialog_hide_on_ok = true
 mode = 0
 access = 1
-current_dir = "user://C:/Users/Lenovo/Documents/DEV/godot/nomecomcopyright/project"
-current_path = "user://C:/Users/Lenovo/Documents/DEV/godot/nomecomcopyright/project/"
+current_dir = "user://C:/Users/Rica/Documents/GameDev/nomecomcopyright/project"
+current_path = "user://C:/Users/Rica/Documents/GameDev/nomecomcopyright/project/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="ImgSelectScreen/ScrollContainer/ImageGallery/Image6" to="." method="_on_SelectNew_pressed"]

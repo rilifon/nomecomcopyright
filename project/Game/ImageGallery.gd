@@ -4,6 +4,7 @@ onready var grid_child = get_child(get_child_count()-1)
 
 func _ready():
 	on_resize_screen()
+# warning-ignore:return_value_discarded
 	connect("resized", self, "on_resize_screen")
 	
 	var children = get_children()
@@ -18,6 +19,7 @@ func on_resize_screen():
 	elif rect_size.x < 912 * 3: columns = 3
 	else: columns = 5
 	
+# warning-ignore:integer_division
 	var rows = get_child_count() / columns
 	if get_child_count() % columns != 0: rows += 1
 	

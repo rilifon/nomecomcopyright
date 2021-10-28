@@ -93,14 +93,18 @@ func make_board() -> void:
 		board[rows+1].append(-1)
 
 
-func randomize_board(number_of_swaps:= 10):
+func get_random_direction():
+	return DIR.values()[randi()%DIR.size()]
+
+
+func randomize_board(number_of_swaps:= 600):
+	var free_piece = get_free_space_piece()
 	for _i in number_of_swaps:
-		var id1 = randi()%Grid.get_child_count()
-		var id2 = randi()%Grid.get_child_count()
-		while id2 == id1:
-			id2 = randi()%Grid.get_child_count()
+		var target_piece = get_adjacent_piece(free_piece, get_random_direction())
+		while not target_piece:
+			target_piece = get_adjacent_piece(free_piece, get_random_direction())
 		
-		exchange_pieces_position(Grid.get_child(id1), Grid.get_child(id2))
+		exchange_pieces_position(free_piece, target_piece)
 
 
 #For debugging
