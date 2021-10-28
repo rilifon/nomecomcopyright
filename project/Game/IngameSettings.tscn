@@ -57,7 +57,7 @@ align = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 100.0
 margin_right = 640.0
-margin_bottom = 1212.0
+margin_bottom = 1106.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 26
@@ -95,15 +95,35 @@ margin_bottom = 51.0
 custom_fonts/font = SubResource( 3 )
 text = "Ingame move counter"
 
-[node name="Close" type="Button" parent="VBoxContainer"]
-margin_left = 269.0
-margin_top = 1235.0
-margin_right = 371.0
+[node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 1129.0
+margin_right = 640.0
 margin_bottom = 1280.0
-size_flags_horizontal = 4
-custom_fonts/font = SubResource( 4 )
-text = "Close"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+custom_constants/separation = 30
+alignment = 1
 
+[node name="ResumeGame" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 215.0
+margin_right = 425.0
+margin_bottom = 60.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+text = "RESUME GAME"
+
+[node name="ReturnHome" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 125.0
+margin_top = 90.0
+margin_right = 515.0
+margin_bottom = 151.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+text = "RETURN TO HOME SCREEN"
 [connection signal="toggled" from="VBoxContainer/VBoxContainer/TimerSetting/TimerToggle" to="." method="_on_TimerToggle_toggled"]
 [connection signal="toggled" from="VBoxContainer/VBoxContainer/MovesSetting/MovesToggle" to="." method="_on_MovesToggle_toggled"]
-[connection signal="pressed" from="VBoxContainer/Close" to="." method="_on_Close_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/ResumeGame" to="." method="_on_Close_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/ReturnHome" to="." method="_on_ReturnHome_pressed"]

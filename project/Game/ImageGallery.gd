@@ -38,3 +38,9 @@ func on_image_pressed(image):
 
 func _on_Select_Image_pressed():
 	pass # Replace with function body.
+
+
+func _on_FileDialog_file_selected(path):
+	var image = TextureButton.new()
+	image.texture_normal = load(path)
+	on_image_pressed(image)
