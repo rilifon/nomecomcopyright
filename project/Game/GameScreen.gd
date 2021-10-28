@@ -20,7 +20,7 @@ func _ready():
 func _process(_delta):
 	moves_label.text = str(slider_board.moves) + "\nMoves";
 	ellapsed_time = OS.get_unix_time() - start_time
-	timer_label.text = format_time(ellapsed_time)
+	timer_label.text = format_time(ellapsed_time) + "\nMinutes"
 
 
 func format_time(ellapsed_seconds : int) -> String:
