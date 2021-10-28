@@ -50,3 +50,7 @@ func set_show_timer(val : bool):
 
 func _on_SettingsButton_pressed():
 	ingame_settings.show()
+
+
+func _on_RestartButton_pressed():
+	slider_board._ready()

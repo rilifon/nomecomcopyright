@@ -21,9 +21,12 @@ var moves : int = 0
 
 
 func _ready() -> void:
+	prepare_board()
+
+
+func prepare_board():
 	randomize()
 	reset_board()
-#	picture = get_picture("sliding_puzzle-Bracelete-min.png")
 	rows = 4
 	columns = 4
 	$GridContainer.columns = columns

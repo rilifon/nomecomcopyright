@@ -38,30 +38,30 @@ __meta__ = {
 }
 
 [node name="Headers" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1097.0
-margin_bottom = 578.0
+margin_right = 1080.0
+margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/Headers"]
-margin_right = 363.0
-margin_bottom = 578.0
+margin_right = 357.0
+margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SettingsButton" type="TextureButton" parent="VBoxContainer/Headers/CenterContainer"]
-margin_left = 117.0
-margin_top = 225.0
-margin_right = 245.0
-margin_bottom = 353.0
+margin_left = 114.0
+margin_top = 158.0
+margin_right = 242.0
+margin_bottom = 286.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture_normal = ExtResource( 5 )
 
 [node name="Level" type="Label" parent="VBoxContainer/Headers"]
-margin_left = 367.0
-margin_right = 730.0
-margin_bottom = 578.0
+margin_left = 361.0
+margin_right = 718.0
+margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
@@ -72,36 +72,36 @@ valign = 1
 autowrap = true
 
 [node name="RightContainer" type="CenterContainer" parent="VBoxContainer/Headers"]
-margin_left = 734.0
-margin_right = 1097.0
-margin_bottom = 578.0
+margin_left = 722.0
+margin_right = 1080.0
+margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RestartButton" type="TextureButton" parent="VBoxContainer/Headers/RightContainer"]
-margin_left = 111.0
-margin_top = 219.0
-margin_right = 251.0
-margin_bottom = 359.0
+margin_left = 109.0
+margin_top = 152.0
+margin_right = 249.0
+margin_bottom = 292.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture_normal = ExtResource( 6 )
 
 [node name="SliderBoard" parent="VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 582.0
-margin_right = 1097.0
-margin_bottom = 1606.0
+margin_top = 448.0
+margin_right = 1080.0
+margin_bottom = 1472.0
 
 [node name="BottomText" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 1610.0
-margin_right = 1097.0
-margin_bottom = 2188.0
+margin_top = 1476.0
+margin_right = 1080.0
+margin_bottom = 1920.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Moves" type="Label" parent="VBoxContainer/BottomText"]
-margin_right = 363.0
-margin_bottom = 578.0
+margin_right = 538.0
+margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
@@ -112,9 +112,9 @@ valign = 1
 autowrap = true
 
 [node name="Timer" type="Label" parent="VBoxContainer/BottomText"]
-margin_left = 367.0
-margin_right = 730.0
-margin_bottom = 578.0
+margin_left = 542.0
+margin_right = 1080.0
+margin_bottom = 444.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
@@ -123,19 +123,7 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="Label3" type="Label" parent="VBoxContainer/BottomText"]
-margin_left = 734.0
-margin_right = 1097.0
-margin_bottom = 578.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "hi"
-align = 1
-valign = 1
-autowrap = true
-
 [node name="IngameSettings" parent="." instance=ExtResource( 7 )]
 visible = false
 [connection signal="pressed" from="VBoxContainer/Headers/CenterContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/Headers/RightContainer/RestartButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Headers/RightContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
