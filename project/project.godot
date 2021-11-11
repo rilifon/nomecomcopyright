@@ -18,6 +18,10 @@ config/name="NomeComCopyright"
 run/main_scene="res://Game/ImgSelectScreen.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+TransitionManager="*res://Game/Transition/TransitionManager.tscn"
+
 [display]
 
 window/size/width=1080

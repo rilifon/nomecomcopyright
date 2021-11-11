@@ -123,6 +123,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 text = "RETURN TO HOME SCREEN"
+
 [connection signal="toggled" from="VBoxContainer/VBoxContainer/TimerSetting/TimerToggle" to="." method="_on_TimerToggle_toggled"]
 [connection signal="toggled" from="VBoxContainer/VBoxContainer/MovesSetting/MovesToggle" to="." method="_on_MovesToggle_toggled"]
 [connection signal="pressed" from="VBoxContainer/Buttons/ResumeGame" to="." method="_on_Close_pressed"]
