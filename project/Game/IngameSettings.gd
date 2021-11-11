@@ -19,14 +19,13 @@ func _on_MovesToggle_toggled(button_pressed):
 
 
 func _on_Close_pressed():
+	get_tree().paused = false
 	hide()
 
 
 func _on_ReturnHome_pressed():
+	get_tree().paused = false
 	TransitionManager.begin_transition()
 	yield(TransitionManager, "screen_dimmed")
-	var screen = load("res://Game/ImgSelectScreen.tscn").instance()
-	
-	get_tree().get_root().add_child(screen)
-	owner.queue_free()
+	get_tree().change_scene("res://Game/ImgSelectScreen.tscn")
 	TransitionManager.end_transition()

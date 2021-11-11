@@ -5,7 +5,6 @@ export(NodePath) onready var moves_label = self.get_node(moves_label) as Label
 export(NodePath) onready var timer_label = self.get_node(timer_label) as Label
 export(NodePath) onready var ingame_settings = self.get_node(ingame_settings) as Control
 
-var start_time : int
 var ellapsed_time : int = 0
 
 var show_moves : bool = true setget set_show_moves
@@ -14,13 +13,10 @@ var show_timer : bool = true setget set_show_timer
 func _ready():
 	ingame_settings.connect("set_timer_visibility", self, "set_show_timer")
 	ingame_settings.connect("set_moves_visibility", self, "set_show_moves")
-	start_time = OS.get_unix_time()
 
 
 func _process(_delta):
 	moves_label.text = str(slider_board.moves) + "\nMoves";
-	ellapsed_time = OS.get_unix_time() - start_time
-	timer_label.text = format_time(ellapsed_time) + "\nMinutes"
 
 
 func format_time(ellapsed_seconds : int) -> String:
@@ -50,6 +46,7 @@ func set_show_timer(val : bool):
 
 func _on_SettingsButton_pressed():
 	ingame_settings.show()
+	get_tree().paused = true
 
 
 func _on_RestartButton_pressed():
@@ -57,3 +54,8 @@ func _on_RestartButton_pressed():
 	yield(TransitionManager, "screen_dimmed")
 	slider_board.prepare_board()
 	TransitionManager.end_transition()
+
+
+func _on_Seconds_timeout():
+	ellapsed_time += 1
+	timer_label.text = format_time(ellapsed_time) + "\nMinutes"
