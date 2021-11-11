@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float value : hint_range(0.0, 1.0);
+uniform float smoothing : hint_range(0.0, 1.0);
+uniform bool mirror_x;
+uniform bool mirror_y;
+
+void fragment() {
+	float x = mirror_x ? 1.0 - UV.x : UV.x;
+	float y = mirror_y ? 1.0 - UV.y : UV.y;
+	vec4 color = texture(TEXTURE, vec2(x, y));
+	float upper_edge = value * (1.0 + smoothing);
+	float lower_edge = upper_edge - smoothing;
+	
+	COLOR = vec4(vec3(0.0), 1.0 - smoothstep(lower_edge, upper_edge, color.r));
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/value = 0.0
+shader_param/smoothing = 0.25
+shader_param/mirror_x = false
+shader_param/mirror_y = false

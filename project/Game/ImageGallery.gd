@@ -27,6 +27,8 @@ func on_resize_screen():
 	
 	
 func on_image_pressed(image):
+	TransitionManager.begin_transition()
+	yield(TransitionManager, "screen_dimmed")
 	var game = load("res://Game/GameScreen.tscn").instance()
 	var board = game.get_node("VBoxContainer/SliderBoard")
 	
@@ -34,6 +36,7 @@ func on_image_pressed(image):
 	
 	get_tree().get_root().add_child(game)
 	owner.queue_free()
+	TransitionManager.end_transition()
 
 
 func _on_Select_Image_pressed():

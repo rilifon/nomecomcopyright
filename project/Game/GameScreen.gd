@@ -53,4 +53,7 @@ func _on_SettingsButton_pressed():
 
 
 func _on_RestartButton_pressed():
-	slider_board._ready()
+	TransitionManager.begin_transition()
+	yield(TransitionManager, "screen_dimmed")
+	slider_board.prepare_board()
+	TransitionManager.end_transition()
