@@ -58,8 +58,11 @@ func reset_board():
 
 
 func get_picture(path : = "res://Assets/retangulo.jpg") -> ImageTexture:
-	var IMAGE = load(path)
-	var img : Image = IMAGE.get_data()
+#	var IMAGE = load(path)
+#	var img : Image = IMAGE.get_data()
+	var img : Image = Image.new()
+	img.load(path)
+	print(img.get_width())
 	
 	img = scale_and_crop(img)
 	

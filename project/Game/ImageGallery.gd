@@ -42,5 +42,11 @@ func _on_Select_Image_pressed():
 
 func _on_FileDialog_file_selected(path):
 	var image = TextureButton.new()
-	image.texture_normal = load(path)
+	
+	var img := Image.new()
+	image.texture_normal = ImageTexture.new()
+	img.load(path)
+	image.texture_normal.create_from_image(img)
+	
+	image.texture_normal.resource_path = path
 	on_image_pressed(image)
