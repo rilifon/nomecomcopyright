@@ -198,10 +198,11 @@ dialog_hide_on_ok = true
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png ; PNG Images", "*.bmp ; BPM Images", "*.dds ; DDS Images", "*.exr ; EZR Images", "*.hdr ; HDR Images", "*.jpg ; JPG Images", "*.jpeg ; JPEG  Images", "*.tga ; TGA Images", "*.svg ; SVG Images", "*.svgz ; SVGZ Images", "*.webp ; WEBP Images" )
-current_dir = "/Users/Lenovo/Documents/DEV/nomecomcopyright/project"
-current_path = "/Users/Lenovo/Documents/DEV/nomecomcopyright/project/"
+current_dir = "/home/ptrschneider/Documents/coding/godot/nomecomcopyright/project"
+current_path = "/home/ptrschneider/Documents/coding/godot/nomecomcopyright/project/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="ImgSelectScreen/ScrollContainer/ImageGallery/Image6" to="." method="_on_SelectNew_pressed"]
 [connection signal="file_selected" from="FileDialog" to="ImgSelectScreen/ScrollContainer/ImageGallery" method="_on_FileDialog_file_selected"]

@@ -58,11 +58,8 @@ func reset_board():
 
 
 func get_picture(path : = "res://Assets/retangulo.jpg") -> ImageTexture:
-#	var IMAGE = load(path)
-#	var img : Image = IMAGE.get_data()
 	var img : Image = Image.new()
 	img.load(path)
-	print(img.get_width())
 	
 	img = scale_and_crop(img)
 	
@@ -94,6 +91,7 @@ func make_board() -> void:
 			create_piece(r, c, fake_piece == r*columns + c)
 		board[r+1].append(-1)
 	board.append([])
+	$FinishedPicture.texture = picture
 	#Lower padding
 	for _i in range(columns+2):
 		board[rows+1].append(-1)
@@ -204,7 +202,12 @@ func move_piece(piece, free_piece):
 	enable_pieces()
 	exchange_pieces_position(piece, free_piece, true)
 	if check_board():
-		print("haha img go brr")
+		$AnimationPlayer.play("ShowFinishedPicture")
+		yield(get_tree().create_timer(2), "timeout")
+		TransitionManager.begin_transition()
+		yield(TransitionManager, "screen_dimmed")
+		get_tree().change_scene("res://Game/ImgSelectScreen.tscn")
+		TransitionManager.end_transition()
 
 
 func exchange_pieces_position(piece1, piece2, increase_moves) -> void:

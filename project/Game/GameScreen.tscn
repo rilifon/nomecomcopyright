@@ -130,6 +130,7 @@ autostart = true
 [node name="IngameSettings" parent="." instance=ExtResource( 7 )]
 pause_mode = 2
 visible = false
+
 [connection signal="pressed" from="VBoxContainer/Headers/CenterContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Headers/RightContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="timeout" from="VBoxContainer/BottomText/Seconds" to="." method="_on_Seconds_timeout"]
